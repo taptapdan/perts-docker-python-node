@@ -8,6 +8,8 @@ WORKDIR /home/circleci
 
 # Update system
 RUN sudo apt update
+
+# Install MySQL client libs
 RUN sudo apt install -y default-libmysqlclient-dev
 RUN sudo apt install default-mysql-client
 RUN sudo wget https://raw.githubusercontent.com/paulfitz/mysql-connector-c/master/include/my_config.h -O /usr/include/mysql/my_config.h
@@ -27,7 +29,7 @@ RUN CLOUDSDK_CORE_DISABLE_PROMPTS=1 gcloud components install app-engine-python
 RUN CLOUDSDK_CORE_DISABLE_PROMPTS=1 gcloud components install app-engine-python-extras
 RUN CLOUDSDK_CORE_DISABLE_PROMPTS=1 gcloud components update --version=359.0.0
 
-# GCloud: Postinstall Fix (for pyenv & pip)
+# GCloud: Postinstall fix (for pyenv & pip)
 RUN rm -rf /home/circleci/.pyenv
 RUN curl https://pyenv.run | bash
 RUN sudo apt install python-pip
