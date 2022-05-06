@@ -8,8 +8,9 @@ WORKDIR /home/circleci
 
 # Update system
 RUN sudo apt update
-RUN sudo apt-get install -y default-libmysqlclient-dev
+RUN sudo apt install -y default-libmysqlclient-dev
 RUN sudo apt install default-mysql-client
+RUN sudo wget https://raw.githubusercontent.com/paulfitz/mysql-connector-c/master/include/my_config.h -O /usr/include/mysql/my_config.h
 
 # Gcloud: Install
 RUN curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${GCLOUD_VERSION}-linux-x86_64.tar.gz
