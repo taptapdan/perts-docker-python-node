@@ -1,7 +1,8 @@
 # https://circleci.com/developer/images/image/cimg/python
 FROM cimg/python:2.7.18-node
 
-ARG GCLOUD_VERSION=359.0.0
+# Available versions: https://console.cloud.google.com/storage/browser/cloud-sdk-release
+ARG GCLOUD_SOURCE=google-cloud-sdk-359.0.0-linux-x86_64.tar.gz
 
 # Set working directory while setting up system
 WORKDIR /home/circleci
@@ -15,8 +16,9 @@ RUN sudo apt install default-mysql-client
 RUN sudo wget https://raw.githubusercontent.com/paulfitz/mysql-connector-c/master/include/my_config.h -O /usr/include/mysql/my_config.h
 
 # Gcloud: Install
-RUN curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${GCLOUD_VERSION}-linux-x86_64.tar.gz
-RUN tar -xf google-cloud-sdk-${GCLOUD_VERSION}-linux-x86_64.tar.gz
+RUN curl -o google-cloud-sdk.tar.gz https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/${GCLOUD_SOURCE}
+RUN tar -xf google-cloud-sdk.tar.gz
+RUN rm google-cloud-sdk.tar.gz
 RUN CLOUDSDK_CORE_DISABLE_PROMPTS=1 ./google-cloud-sdk/install.sh
 
 # GCloud: Update path
