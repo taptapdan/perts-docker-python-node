@@ -3,6 +3,7 @@ FROM cimg/python:2.7.18-node
 
 # Available versions: https://console.cloud.google.com/storage/browser/cloud-sdk-release
 ARG GCLOUD_SOURCE=google-cloud-sdk-359.0.0-linux-x86_64.tar.gz
+ARG GCLOUD_VERSION=359.0.0
 
 # Set working directory while setting up system
 WORKDIR /home/circleci
@@ -29,7 +30,7 @@ ENV PATH="$PATH:/home/circleci/google-cloud-sdk/bin"
 # GCloud: Install components
 RUN CLOUDSDK_CORE_DISABLE_PROMPTS=1 gcloud components install app-engine-python
 RUN CLOUDSDK_CORE_DISABLE_PROMPTS=1 gcloud components install app-engine-python-extras
-RUN CLOUDSDK_CORE_DISABLE_PROMPTS=1 gcloud components update --version=359.0.0
+RUN CLOUDSDK_CORE_DISABLE_PROMPTS=1 gcloud components update --version=${GCLOUD_VERSION}
 
 # GCloud: Postinstall fix (for pyenv & pip)
 RUN rm -rf /home/circleci/.pyenv
